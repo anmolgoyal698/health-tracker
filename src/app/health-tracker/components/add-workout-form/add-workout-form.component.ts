@@ -46,6 +46,8 @@ export class AddWorkoutFormComponent implements OnInit {
       workoutType,
       workoutMinutes
     );
+
+    this.workoutForm.reset();
   }
 
   positiveNumberValidator(): ValidatorFn {

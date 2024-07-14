@@ -1,10 +1,19 @@
-import { IWorkoutItem, WorkoutType } from './health-tracker.model';
+import {
+  IWorkoutItem,
+  WorkoutFilter,
+  WorkoutType,
+} from './health-tracker.model';
 
 export const WORKOUT_OPTIONS: WorkoutType[] = [
   'Running',
   'Cycling',
   'Swimming',
   'Yoga',
+];
+
+export const WORKOUT_FILTER_OPTIONS: WorkoutFilter[] = [
+  ...WORKOUT_OPTIONS,
+  'All',
 ];
 
 export const DEFAULT_WORKOUT_LIST: IWorkoutItem[] = [

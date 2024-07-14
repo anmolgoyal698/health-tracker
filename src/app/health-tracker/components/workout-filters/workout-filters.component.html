@@ -1,0 +1,19 @@
+<mat-form-field>
+  <input
+    matInput
+    placeholder="Search"
+    [value]="searchQuery"
+    (input)="onSearchQueryChange($event)"
+  />
+</mat-form-field>
+
+<mat-form-field>
+  <mat-select
+    [value]="workoutFilter"
+    (selectionChange)="onWorkoutFilterChange($event)"
+  >
+    <mat-option *ngFor="let option of workoutFilterOptions" [value]="option">
+      {{ option }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>

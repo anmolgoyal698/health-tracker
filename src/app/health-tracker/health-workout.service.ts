@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map } from 'rxjs';
 import {
   IWorkoutItem,
   IWorkoutTableItem,
@@ -103,8 +103,30 @@ export class HealthWorkoutService {
   }
 
   getWorkoutTableObservable() {
-    return this.workoutList$.pipe(
-      map((workoutList) => this.convertWorkoutListToTableFormat(workoutList))
+    return combineLatest([
+      this.searchQuery$,
+      this.workoutFilter$,
+      this.workoutList$,
+    ]).pipe(
+      map(([searchQuery, workoutFilter, workoutList]) => {
+        console.log(searchQuery, workoutFilter, workoutList);
+        const workoutListTableFormat =
+          this.convertWorkoutListToTableFormat(workoutList);
+        const filteredWorkoutList = workoutListTableFormat.filter(
+          (workoutItem) => {
+            return (
+              workoutItem.name
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase()) &&
+              (workoutItem.workouts
+                .toLowerCase()
+                .includes(workoutFilter.toLowerCase()) ||
+                workoutFilter === 'All')
+            );
+          }
+        );
+        return filteredWorkoutList;
+      })
     );
   }
 }
