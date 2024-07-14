@@ -1,0 +1,44 @@
+<form [formGroup]="workoutForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="username">
+    <mat-label>User Name</mat-label>
+    <input
+      matInput
+      placeholder="Type your username"
+      formControlName="username"
+    />
+    <mat-error *ngIf="workoutForm.get('username')?.errors?.['required']">
+      Please provide a user name.
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="workout-type">
+    <mat-label>Workout Type</mat-label>
+    <mat-select formControlName="workoutType">
+      <mat-option *ngFor="let option of workoutOptions" [value]="option">
+        {{ option }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="workout-minutes">
+    <mat-label>Workout Minutes</mat-label>
+    <input
+      matInput
+      placeholder="Enter minutes"
+      formControlName="workoutMinutes"
+      type="number"
+    />
+    <mat-error *ngIf="workoutForm.get('workoutMinutes')?.errors?.['required']">
+      Workout minutes is required.
+    </mat-error>
+    <mat-error
+      *ngIf="workoutForm.get('workoutMinutes')?.errors?.['positiveNumber']"
+    >
+      Workout minutes must be a positive number.
+    </mat-error>
+  </mat-form-field>
+
+  <button [disabled]="!workoutForm.valid" mat-flat-button color="primary">
+    Add workout
+  </button>
+</form>
