@@ -1,0 +1,13 @@
+:host {
+  display: flex;
+  gap: 40px;
+  margin-top: 50px;
+}
+
+app-workout-users-list {
+  width: 400px;
+}
+
+app-chart {
+  flex: 1;
+}

@@ -1,0 +1,8 @@
+<app-workout-users-list></app-workout-users-list>
+
+<app-chart
+  *ngIf="workoutChartLabels"
+  barChartType="bar"
+  [barChartLabels]="workoutChartLabels"
+  [barChartData]="workoutChartData"
+></app-chart>

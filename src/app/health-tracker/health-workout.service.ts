@@ -1,5 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, filter, map } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  filter,
+  map,
+  of,
+  switchMap,
+} from 'rxjs';
 import {
   IWorkoutItem,
   IWorkoutTableItem,
@@ -15,10 +22,12 @@ export class HealthWorkoutService {
   workoutListSubject = new BehaviorSubject([] as IWorkoutItem[]);
   searchQuerySubject = new BehaviorSubject('');
   workoutFilterSubject = new BehaviorSubject('All');
+  selectedUserSubject = new BehaviorSubject<string | null>(null);
 
   workoutList$ = this.workoutListSubject.asObservable();
   searchQuery$ = this.searchQuerySubject.asObservable();
   workoutFilter$ = this.workoutFilterSubject.asObservable();
+  selectedUser$ = this.selectedUserSubject.asObservable();
 
   constructor() {}
 
@@ -128,5 +137,48 @@ export class HealthWorkoutService {
         return filteredWorkoutList;
       })
     );
+  }
+
+  getWorkoutChartsData() {
+    return this.selectedUser$.pipe(
+      filter((name) => !!name),
+      switchMap((name) => {
+        if (!name) {
+          return of(null);
+        }
+        return this.workoutList$.pipe(
+          map((workoutList) => {
+            const userWorkoutData = workoutList.find(
+              (item) => item.name === name
+            );
+            if (userWorkoutData) {
+              return Object.fromEntries(
+                userWorkoutData.workouts.map((item) => [
+                  item.type,
+                  item.minutes,
+                ])
+              );
+            }
+            return [];
+          })
+        );
+      })
+    );
+  }
+
+  getWorkoutUsersList() {
+    return this.workoutList$.pipe(
+      map((workoutList) => {
+        return workoutList.map((item) => item.name);
+      })
+    );
+  }
+
+  setSelectedUser(name: string) {
+    this.selectedUserSubject.next(name);
+  }
+
+  getSelectedUser() {
+    return this.selectedUser$;
   }
 }

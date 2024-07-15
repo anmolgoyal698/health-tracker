@@ -14,6 +14,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WorkoutTableComponent } from './health-tracker/components/workout-table/workout-table.component';
 import { WorkoutFiltersComponent } from './health-tracker/components/workout-filters/workout-filters.component';
+import { NgChartsModule } from 'ng2-charts';
+import { ChartComponent } from './shared/chart/chart.component';
+import { WorkoutProgressComponent } from './health-tracker/components/workout-progress/workout-progress.component';
+import { WorkoutUsersListComponent } from './health-tracker/components/workout-progress/workout-users-list/workout-users-list.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +26,9 @@ import { WorkoutFiltersComponent } from './health-tracker/components/workout-fil
     AddWorkoutFormComponent,
     WorkoutTableComponent,
     WorkoutFiltersComponent,
+    ChartComponent,
+    WorkoutProgressComponent,
+    WorkoutUsersListComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +40,7 @@ import { WorkoutFiltersComponent } from './health-tracker/components/workout-fil
     ReactiveFormsModule,
     MatPaginatorModule,
     FormsModule,
+    NgChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -56,4 +56,20 @@ export class AddWorkoutFormComponent implements OnInit {
       return isValid ? null : { positiveNumber: { value: control.value } };
     };
   }
+
+  get usernameFormControl() {
+    return this.getFormControl('username');
+  }
+
+  get workoutTypeControl() {
+    return this.getFormControl('workoutType');
+  }
+
+  get workoutMinutesControl() {
+    return this.getFormControl('workoutMins');
+  }
+
+  getFormControl(formControlName: string) {
+    return this.workoutForm.get(formControlName);
+  }
 }

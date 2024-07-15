@@ -1,0 +1,5 @@
+<ng-container *ngIf="usersList">
+  <div *ngFor="let user of usersList" (click)="onClickUser(user)">
+    {{ user }}
+  </div>
+</ng-container>
